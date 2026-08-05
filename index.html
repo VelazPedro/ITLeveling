@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT Leveling</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ============ PANTALLA DE INGRESO ============ -->
+  <div id="login" class="login-screen">
+    <div class="login-panel panel">
+      <div class="login-logo">IT LEVELING</div>
+      <div class="login-sub">SISTEMA DE NIVELACIÓN DE SOPORTE</div>
+
+      <span id="login-avatar" class="login-avatar"></span>
+
+      <form id="form-login" class="form" autocomplete="off">
+        <label class="field">
+          <span class="field-label">¿CÓMO TE LLAMÁS?</span>
+          <input id="f-login-nombre" type="text" maxlength="20" required placeholder="Tu nombre" />
+        </label>
+        <div id="login-msg" class="login-msg"></div>
+        <div class="form-actions center">
+          <button type="submit" class="pixel-btn primary">ENTRAR</button>
+        </div>
+      </form>
+
+      <div id="login-existentes" class="login-existentes"></div>
+    </div>
+  </div>
+
+  <!-- ============ BARRA SUPERIOR ============ -->
+  <header class="topbar">
+    <div class="menu-wrap">
+      <button id="btn-menu" class="pixel-btn menu-btn" title="Menú" aria-label="Menú" aria-expanded="false">
+        <span class="burger"></span>
+        <span class="burger"></span>
+        <span class="burger"></span>
+      </button>
+
+      <nav id="menu-drop" class="menu-drop hidden">
+        <button type="button" class="menu-item" data-accion="clasificacion">CLASIFICACIÓN</button>
+        <button type="button" class="menu-item" data-accion="tickets">TICKETS</button>
+        <button type="button" class="menu-item" data-accion="cambiar">CAMBIAR USUARIO</button>
+      </nav>
+    </div>
+
+    <div class="topbar-title">IT LEVELING</div>
+
+    <div class="clock">
+      <div id="clock-date" class="clock-date">--/--/----</div>
+      <div id="clock-time" class="clock-time">--:--:--</div>
+    </div>
+  </header>
+
+  <main class="dashboard">
+
+    <!-- ============ EXPERIENCIA ============ -->
+    <section class="xp-block">
+      <div class="xp-header">
+        <div class="xp-user">
+          <span id="avatar-slot" class="avatar-slot"></span>
+          <span id="user-name" class="xp-name">OPERADOR</span>
+        </div>
+        <div id="rank-text" class="xp-rank">RANDOM</div>
+        <div class="xp-level">NIVEL <span id="level-value">1</span> / <span id="level-max">100</span></div>
+      </div>
+
+      <div class="xp-bar" role="progressbar" aria-labelledby="rank-text">
+        <div id="xp-fill" class="xp-fill"></div>
+        <div id="xp-label" class="xp-label">0 / 80 XP</div>
+      </div>
+    </section>
+
+    <!-- ============ AÑADIR TICKET ============ -->
+    <section>
+      <button id="btn-add-ticket" class="add-ticket">
+        <span class="add-plus" aria-hidden="true"></span>
+        <span class="add-text">AÑADIR TICKET</span>
+      </button>
+    </section>
+
+    <!-- ============ ESTADÍSTICAS ============ -->
+    <section id="stats-grid" class="stats-grid"></section>
+
+    <!-- ============ EVALUACIÓN AUTOMÁTICA ============ -->
+    <section class="feedback">
+      <div class="feedback-title">INFORME DEL SISTEMA</div>
+      <p id="feedback-text" class="feedback-text">
+        Sin registros todavía. Cargá tu primer ticket para que el sistema evalúe tu desempeño.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ============ MODAL: CARGA DE TICKET ============ -->
+  <div id="modal-ticket" class="modal-backdrop hidden">
+    <div class="modal panel" role="dialog" aria-modal="true" aria-labelledby="modal-ticket-title">
+      <div class="panel-title" id="modal-ticket-title">CARGAR TICKET</div>
+
+      <form id="form-ticket" class="form" autocomplete="off">
+        <label class="field">
+          <span class="field-label">NOMBRE DEL TICKET</span>
+          <input id="f-nombre" name="nombre" type="text" maxlength="60" required placeholder="Ej: No imprime en el piso 3" />
+        </label>
+
+        <label class="field">
+          <span class="field-label">CATEGORÍA</span>
+          <select id="f-categoria" name="categoria" required></select>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">DEMORA (MINUTOS)</span>
+            <input id="f-demora" name="demora" type="number" min="1" max="10080" step="1" required placeholder="45" />
+          </label>
+
+          <label class="field">
+            <span class="field-label">URGENCIA</span>
+            <select id="f-urgencia" name="urgencia" required></select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">ROL DE QUIEN CREÓ EL TICKET</span>
+          <select id="f-rol" name="rol" required></select>
+        </label>
+
+        <label class="field">
+          <span class="field-label">TDR — CÓMO LLEGÓ EL TICKET</span>
+          <select id="f-recepcion" name="recepcion" required></select>
+        </label>
+
+        <div class="form-actions">
+          <button type="button" id="btn-cancel-ticket" class="pixel-btn ghost">CANCELAR</button>
+          <button type="submit" class="pixel-btn primary">REGISTRAR</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: SUBIDA DE NIVEL ============ -->
+  <div id="modal-levelup" class="modal-backdrop hidden">
+    <div class="modal panel gold" role="dialog" aria-modal="true" aria-labelledby="levelup-title">
+      <div class="panel-title gold-title" id="levelup-title">¡SUBISTE DE NIVEL!</div>
+
+      <div class="levelup-body">
+        <div class="levelup-levels">
+          <div class="levelup-col">
+            <div class="levelup-cap">ANTES</div>
+            <div id="levelup-old" class="levelup-num old">1</div>
+          </div>
+          <div class="levelup-arrow">&#9654;</div>
+          <div class="levelup-col">
+            <div class="levelup-cap">AHORA</div>
+            <div id="levelup-new" class="levelup-num new">2</div>
+          </div>
+        </div>
+        <div id="levelup-rank" class="levelup-rank">RANDOM</div>
+        <div id="levelup-cap-note" class="levelup-note">Tope de estadísticas: 20</div>
+      </div>
+
+      <div class="form-actions center">
+        <button type="button" id="btn-close-levelup" class="pixel-btn primary">CONTINUAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: CLASIFICACIÓN ============ -->
+  <div id="modal-ranking" class="modal-backdrop hidden">
+    <div class="modal panel ancho" role="dialog" aria-modal="true" aria-labelledby="ranking-title">
+      <div class="panel-title" id="ranking-title">CLASIFICACIÓN DE EXPERIENCIA</div>
+
+      <div class="tabla-scroll">
+        <table class="tabla" id="tabla-ranking">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>PERSONAJE</th>
+              <th>NVL</th>
+              <th>RANGO</th>
+              <th>XP TOTAL</th>
+              <th>TICKETS</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-body"></tbody>
+        </table>
+      </div>
+
+      <div class="form-actions center">
+        <button type="button" class="pixel-btn primary" data-cerrar="#modal-ranking">CERRAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: COMPILADO DE TICKETS ============ -->
+  <div id="modal-tickets" class="modal-backdrop hidden">
+    <div class="modal panel ancho" role="dialog" aria-modal="true" aria-labelledby="tickets-title">
+      <div class="panel-title" id="tickets-title">REGISTRO DE TICKETS</div>
+
+      <div class="tickets-toolbar">
+        <label class="field inline">
+          <span class="field-label">MOSTRAR</span>
+          <select id="f-filtro-tickets">
+            <option value="mios">Mis tickets</option>
+            <option value="todos">Todos los personajes</option>
+          </select>
+        </label>
+        <div id="tickets-resumen" class="tickets-resumen"></div>
+      </div>
+
+      <div id="tickets-lista" class="tickets-lista"></div>
+
+      <div class="form-actions center">
+        <button type="button" class="pixel-btn primary" data-cerrar="#modal-tickets">CERRAR</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
