@@ -1,8 +1,3 @@
-# Artefactos de compilación de PyInstaller
-build/
-dist/
-*.spec
-
 # Python
 __pycache__/
 *.pyc
