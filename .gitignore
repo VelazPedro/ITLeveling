@@ -7,8 +7,8 @@ dist/
 __pycache__/
 *.pyc
 
-# Configuración local de la máquina
-.claude/settings.local.json
+# Configuración local de la máquina y datos personales
+.claude/
 
 # Sistema
 Thumbs.db
